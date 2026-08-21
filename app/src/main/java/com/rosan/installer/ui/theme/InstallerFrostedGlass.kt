@@ -6,6 +6,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Outline
@@ -116,8 +117,8 @@ private fun DrawScope.drawInstallerLiquidOutline(
 
         is Outline.Rounded -> drawRoundRect(
             brush = brush,
-            topLeft = outline.roundRect.topLeft,
-            size = outline.roundRect.size,
+            topLeft = Offset(outline.roundRect.left, outline.roundRect.top),
+            size = Size(outline.roundRect.width, outline.roundRect.height),
             cornerRadius = outline.roundRect.topLeftCornerRadius,
             style = style
         )
