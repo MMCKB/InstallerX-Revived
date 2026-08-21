@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
+import com.rosan.installer.ui.theme.LocalInstallerFrostedGlassBlurRadius
+import com.rosan.installer.ui.theme.withInstallerFrostedGlassOpacity
 import com.rosan.installer.ui.util.WindowBlurEffect
 
 @Composable
@@ -70,15 +72,16 @@ fun PositionDialog(
     rightButton: @Composable (() -> Unit)? = null
 ) {
     val useFrostedGlass = LocalInstallerFrostedGlass.current
+    val frostedGlassBlurRadius = LocalInstallerFrostedGlassBlurRadius.current
     val effectiveContainerColor = if (useFrostedGlass) {
-        containerColor.copy(alpha = 0.72f)
+        containerColor.withInstallerFrostedGlassOpacity()
     } else {
         containerColor
     }
     val effectiveModifier = if (useFrostedGlass) {
         modifier.border(
             width = 1.dp,
-            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.55f),
+            color = MaterialTheme.colorScheme.outlineVariant.withInstallerFrostedGlassOpacity(0.75f),
             shape = shape
         )
     } else {
@@ -86,7 +89,10 @@ fun PositionDialog(
     }
 
     Dialog(onDismissRequest = onDismissRequest, properties = properties) {
-        WindowBlurEffect(useBlur = useBlur)
+        WindowBlurEffect(
+            useBlur = useBlur,
+            blurRadius = if (useFrostedGlass) frostedGlassBlurRadius else 30
+        )
         Box(
             modifier = Modifier
                 .fillMaxSize()

@@ -159,6 +159,10 @@ class AppSettingsRepositoryImpl(
             useBlur = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) prefs[AppDataStore.UI_USE_BLUR]
                 ?: true else false,
             useInstallerFrostedGlass = prefs[AppDataStore.UI_USE_INSTALLER_FROSTED_GLASS] ?: false,
+            installerFrostedGlassBlurRadius =
+                (prefs[AppDataStore.UI_INSTALLER_FROSTED_GLASS_BLUR_RADIUS] ?: 30).coerceIn(10, 100),
+            installerFrostedGlassOpacity =
+                (prefs[AppDataStore.UI_INSTALLER_FROSTED_GLASS_OPACITY] ?: 72).coerceIn(35, 90),
             predictiveBackAnimation = PredictiveBackAnimation.fromValueOrDefault(
                 prefs[AppDataStore.PREDICTIVE_BACK_ANIMATION] ?: PredictiveBackAnimation.MIUIX.value
             ),
@@ -244,6 +248,8 @@ class AppSettingsRepositoryImpl(
     private fun intKey(setting: IntSetting): Preferences.Key<Int> =
         when (setting) {
             IntSetting.ThemeSeedColor -> AppDataStore.THEME_SEED_COLOR
+            IntSetting.UiInstallerFrostedGlassBlurRadius -> AppDataStore.UI_INSTALLER_FROSTED_GLASS_BLUR_RADIUS
+            IntSetting.UiInstallerFrostedGlassOpacity -> AppDataStore.UI_INSTALLER_FROSTED_GLASS_OPACITY
             IntSetting.ShowMiIslandBlockingInterval -> AppDataStore.SHOW_MI_ISLAND_BLOCKING_INTERVAL_MS
             IntSetting.NotificationSuccessAutoClearSeconds -> AppDataStore.NOTIFICATION_SUCCESS_AUTO_CLEAR_SECONDS
             IntSetting.CloseSessionCountdown -> AppDataStore.CLOSE_SESSION_COUNTDOWN

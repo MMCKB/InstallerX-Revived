@@ -95,6 +95,8 @@ class InstallerViewModel(
             viewSettings = local.viewSettings.copy(
                 useBlur = prefs.useBlur,
                 useFrostedGlass = prefs.useBlur && prefs.useInstallerFrostedGlass,
+                frostedGlassBlurRadius = prefs.installerFrostedGlassBlurRadius,
+                frostedGlassOpacity = prefs.installerFrostedGlassOpacity,
                 closeSessionCountDown = prefs.closeSessionCountDown,
                 hideIdenticalComparisons = prefs.hideIdenticalInstallComparisons,
                 showExtendedMenu = prefs.showDialogInstallExtendedMenu,

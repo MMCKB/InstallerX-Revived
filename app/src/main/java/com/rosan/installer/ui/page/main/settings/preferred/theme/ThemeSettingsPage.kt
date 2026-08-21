@@ -67,6 +67,7 @@ import com.rosan.installer.ui.page.main.widget.card.ColorSwatchPreview
 import com.rosan.installer.ui.page.main.widget.setting.BaseItemContainer
 import com.rosan.installer.ui.page.main.widget.setting.BaseWidget
 import com.rosan.installer.ui.page.main.widget.setting.ExpressiveBackButton
+import com.rosan.installer.ui.page.main.widget.setting.IntNumberPickerWidget
 import com.rosan.installer.ui.page.main.widget.setting.RadioButtonWidget
 import com.rosan.installer.ui.page.main.widget.setting.SegmentedColumn
 import com.rosan.installer.ui.page.main.widget.setting.SwitchWidget
@@ -249,6 +250,42 @@ fun ThemeSettingsPage(
                                     viewModel.dispatch(ThemeSettingsAction.SetUseInstallerFrostedGlass(it))
                                 }
                             )
+                        }
+                        if (uiState.useInstallerFrostedGlass) {
+                            item {
+                                IntNumberPickerWidget(
+                                    icon = AppIcons.Blur,
+                                    title = stringResource(R.string.theme_settings_installer_frosted_glass_blur_radius),
+                                    description = stringResource(R.string.theme_settings_installer_frosted_glass_blur_radius_desc),
+                                    value = uiState.installerFrostedGlassBlurRadius,
+                                    startInt = 10,
+                                    endInt = 100,
+                                    stepSize = 5,
+                                    valueSuffix = " px",
+                                    onValueChange = {
+                                        viewModel.dispatch(
+                                            ThemeSettingsAction.SetInstallerFrostedGlassBlurRadius(it)
+                                        )
+                                    }
+                                )
+                            }
+                            item {
+                                IntNumberPickerWidget(
+                                    icon = AppIcons.Blur,
+                                    title = stringResource(R.string.theme_settings_installer_frosted_glass_opacity),
+                                    description = stringResource(R.string.theme_settings_installer_frosted_glass_opacity_desc),
+                                    value = uiState.installerFrostedGlassOpacity,
+                                    startInt = 35,
+                                    endInt = 90,
+                                    stepSize = 5,
+                                    valueSuffix = "%",
+                                    onValueChange = {
+                                        viewModel.dispatch(
+                                            ThemeSettingsAction.SetInstallerFrostedGlassOpacity(it)
+                                        )
+                                    }
+                                )
+                            }
                         }
                     }
                     item {

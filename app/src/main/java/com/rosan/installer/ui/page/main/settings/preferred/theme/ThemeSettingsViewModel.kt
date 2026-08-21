@@ -58,6 +58,8 @@ class ThemeSettingsViewModel(
             showMiuixUI = prefs.showMiuixUI,
             useBlur = prefs.useBlur,
             useInstallerFrostedGlass = prefs.useInstallerFrostedGlass,
+            installerFrostedGlassBlurRadius = prefs.installerFrostedGlassBlurRadius,
+            installerFrostedGlassOpacity = prefs.installerFrostedGlassOpacity,
             themeMode = prefs.themeMode,
             paletteStyle = prefs.paletteStyle,
             colorSpec = prefs.colorSpec,
@@ -85,6 +87,12 @@ class ThemeSettingsViewModel(
             is ThemeSettingsAction.SetUseBlur -> viewModelScope.launch { updateSetting(BooleanSetting.UiUseBlur, action.enable) }
             is ThemeSettingsAction.SetUseInstallerFrostedGlass -> viewModelScope.launch {
                 updateSetting(BooleanSetting.UiUseInstallerFrostedGlass, action.enable)
+            }
+            is ThemeSettingsAction.SetInstallerFrostedGlassBlurRadius -> viewModelScope.launch {
+                updateSetting(IntSetting.UiInstallerFrostedGlassBlurRadius, action.radius)
+            }
+            is ThemeSettingsAction.SetInstallerFrostedGlassOpacity -> viewModelScope.launch {
+                updateSetting(IntSetting.UiInstallerFrostedGlassOpacity, action.opacity)
             }
             is ThemeSettingsAction.SetThemeMode -> viewModelScope.launch { updateSetting(StringSetting.ThemeMode, action.mode.name) }
             is ThemeSettingsAction.SetPaletteStyle -> viewModelScope.launch { updateSetting(StringSetting.ThemePaletteStyle, action.style.name) }

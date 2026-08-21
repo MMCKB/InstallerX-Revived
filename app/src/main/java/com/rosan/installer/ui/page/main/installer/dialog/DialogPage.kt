@@ -24,6 +24,9 @@ import com.rosan.installer.ui.theme.InstallerMaterialExpressiveTheme
 import com.rosan.installer.ui.theme.InstallerTheme
 import com.rosan.installer.ui.theme.LocalInstallerColorScheme
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
+import com.rosan.installer.ui.theme.LocalInstallerFrostedGlassBlurRadius
+import com.rosan.installer.ui.theme.LocalInstallerFrostedGlassOpacity
+import com.rosan.installer.ui.theme.withInstallerFrostedGlassOpacity
 import com.rosan.installer.ui.theme.material.dynamicColorScheme
 import com.rosan.installer.ui.util.WindowBlurEffect
 import org.koin.compose.viewmodel.koinViewModel
@@ -42,6 +45,8 @@ fun DialogPage(
     val temporarySeedColor = uiState.seedColor
     val useBlur = viewSettings.useBlur
     val useFrostedGlass = viewSettings.useFrostedGlass
+    val frostedGlassBlurRadius = viewSettings.frostedGlassBlurRadius
+    val frostedGlassOpacity = viewSettings.frostedGlassOpacity
 
     val globalColorScheme = InstallerTheme.colorScheme
     val isDark = InstallerTheme.isDark
@@ -67,7 +72,9 @@ fun DialogPage(
 
     CompositionLocalProvider(
         LocalInstallerColorScheme provides activeColorScheme,
-        LocalInstallerFrostedGlass provides useFrostedGlass
+        LocalInstallerFrostedGlass provides useFrostedGlass,
+        LocalInstallerFrostedGlassBlurRadius provides frostedGlassBlurRadius,
+        LocalInstallerFrostedGlassOpacity provides frostedGlassOpacity
     ) {
         InstallerMaterialExpressiveTheme(
             colorScheme = activeColorScheme,
@@ -104,14 +111,18 @@ fun DialogPage(
                     },
                     sheetState = sheetState,
                     containerColor = if (useFrostedGlass) {
-                        colorScheme.surfaceContainer.copy(alpha = 0.72f)
+                        colorScheme.surfaceContainer.withInstallerFrostedGlassOpacity()
                     } else {
                         colorScheme.surfaceContainer
                     },
                     contentColor = colorScheme.onSurface
                 ) {
                     WindowNavigationEventBridge()
-                    val blurRadius = if (sheetState.targetValue == SheetValue.Expanded) 30 else 0
+                    val blurRadius = if (sheetState.targetValue == SheetValue.Expanded) {
+                        frostedGlassBlurRadius
+                    } else {
+                        0
+                    }
                     AnimatedContent(targetState = blurRadius) { targetState ->
                         WindowBlurEffect(useBlur = useBlur, blurRadius = targetState)
                     }

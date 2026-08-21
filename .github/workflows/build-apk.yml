@@ -11,6 +11,18 @@ on:
         options:
           - previewDebug
           - unstableDebug
+          - previewRelease
+          - unstableRelease
+          - stableRelease
+      version_tag:
+        description: Version tag for a GitHub Release (for example, 26.08.22)
+        required: false
+        type: string
+      publish_release:
+        description: Create or update the GitHub Release for version_tag after building a Release APK
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -20,10 +32,32 @@ jobs:
   build_apk:
     name: Build ${{ inputs.variant }} APK
     runs-on: ubuntu-latest
+    outputs:
+      artifact_name: ${{ steps.package_apk.outputs.artifact_name }}
+      apk_size_bytes: ${{ steps.package_apk.outputs.apk_size_bytes }}
+      apk_file: ${{ steps.package_apk.outputs.apk_file }}
 
     steps:
       - name: Check out source
         uses: actions/checkout@v7
+
+      - name: Validate release inputs
+        env:
+          VARIANT: ${{ inputs.variant }}
+          VERSION_TAG: ${{ inputs.version_tag }}
+          PUBLISH_RELEASE: ${{ inputs.publish_release }}
+        run: |
+          if [ "${PUBLISH_RELEASE}" != "true" ]; then
+            exit 0
+          fi
+          if [[ "${VARIANT}" != *Release ]]; then
+            echo "ERROR: A GitHub Release can only be published from a Release APK variant."
+            exit 1
+          fi
+          if [ -z "${VERSION_TAG}" ]; then
+            echo "ERROR: version_tag is required when publish_release is enabled."
+            exit 1
+          fi
 
       - name: Set up JDK 25
         uses: actions/setup-java@v5
@@ -42,17 +76,122 @@ jobs:
       - name: Grant execute permission for Gradle wrapper
         run: chmod +x ./gradlew
 
+      - name: Configure release signing
+        if: endsWith(inputs.variant, 'Release')
+        env:
+          SIGNING_KEY_STORE_BASE64: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          PUBLISH_RELEASE: ${{ inputs.publish_release }}
+        run: |
+          if [ -z "${SIGNING_STORE_PASSWORD:-}" ] || [ -z "${SIGNING_KEY_STORE_BASE64:-}" ] || [ -z "${SIGNING_KEY_PASSWORD:-}" ] || [ -z "${SIGNING_KEY_ALIAS:-}" ]; then
+            if [ "${PUBLISH_RELEASE}" = "true" ]; then
+              echo "ERROR: Release publishing requires all signing secrets."
+              exit 1
+            fi
+            echo "No custom signing info. The Release APK will use the configured local fallback."
+            exit 0
+          fi
+          mkdir -p keystore
+          echo "${SIGNING_KEY_STORE_BASE64}" | base64 --decode > keystore/carlyu.jks
+          {
+            echo "storeFile=keystore/carlyu.jks"
+            echo "keyAlias=${SIGNING_KEY_ALIAS}"
+            echo "keyPassword=${SIGNING_KEY_PASSWORD}"
+            echo "storePassword=${SIGNING_STORE_PASSWORD}"
+          } > keystore.properties
+
       - name: Build APK
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew assemble${{ inputs.variant }} --no-configuration-cache
+          VARIANT: ${{ inputs.variant }}
+          VERSION_TAG: ${{ inputs.version_tag }}
+          PUBLISH_RELEASE: ${{ inputs.publish_release }}
+        run: |
+          gradle_args=("assemble${VARIANT}" "--no-configuration-cache")
+          if [ "${PUBLISH_RELEASE}" = "true" ]; then
+            gradle_args+=("-PVERSION_NAME=${VERSION_TAG}")
+          fi
+          ./gradlew "${gradle_args[@]}"
+
+      - name: Package APK and report size
+        id: package_apk
+        env:
+          VARIANT: ${{ inputs.variant }}
+          VERSION_TAG: ${{ inputs.version_tag }}
+          PUBLISH_RELEASE: ${{ inputs.publish_release }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          apk_path="$(find app/build/outputs/apk -type f -name '*.apk' -print -quit)"
+          if [ -z "${apk_path}" ]; then
+            echo "ERROR: APK output was not found."
+            exit 1
+          fi
+
+          mkdir -p release-assets
+          if [ "${PUBLISH_RELEASE}" = "true" ]; then
+            apk_name="InstallerX-Revived-${VERSION_TAG}.apk"
+          else
+            apk_name="InstallerX-Revived-${VARIANT}-${RUN_ID}.apk"
+          fi
+          cp "${apk_path}" "release-assets/${apk_name}"
+
+          apk_size_bytes="$(stat --format=%s "release-assets/${apk_name}")"
+          printf 'Built APK: %s (%s bytes)\n' "${apk_name}" "${apk_size_bytes}"
+          echo "artifact_name=InstallerX-Revived-${VARIANT}-${RUN_ID}" >> "${GITHUB_OUTPUT}"
+          echo "apk_size_bytes=${apk_size_bytes}" >> "${GITHUB_OUTPUT}"
+          echo "apk_file=release-assets/${apk_name}" >> "${GITHUB_OUTPUT}"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v7
         with:
-          name: InstallerX-Revived-${{ inputs.variant }}-${{ github.sha }}
-          path: app/build/outputs/apk/**/*.apk
+          name: ${{ steps.package_apk.outputs.artifact_name }}
+          path: release-assets/*.apk
           if-no-files-found: error
           retention-days: 15
           archive: false
+
+  publish_release:
+    name: Publish GitHub Release
+    needs: build_apk
+    if: inputs.publish_release
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: write
+
+    steps:
+      - name: Download release APK
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ needs.build_apk.outputs.artifact_name }}
+          path: release-assets
+
+      - name: Confirm release asset
+        env:
+          VERSION_TAG: ${{ inputs.version_tag }}
+        run: |
+          apk_path="$(find release-assets -type f -name '*.apk' -print -quit)"
+          if [ -z "${apk_path}" ]; then
+            echo "ERROR: Release APK was not downloaded."
+            exit 1
+          fi
+          expected_name="InstallerX-Revived-${VERSION_TAG}.apk"
+          if [ "$(basename "${apk_path}")" != "${expected_name}" ]; then
+            echo "ERROR: Expected ${expected_name}, found $(basename "${apk_path}")."
+            exit 1
+          fi
+
+      - name: Create or update version release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ inputs.version_tag }}
+          name: InstallerX Revived ${{ inputs.version_tag }}
+          target_commitish: ${{ github.sha }}
+          generate_release_notes: true
+          prerelease: ${{ inputs.variant != 'stableRelease' }}
+          files: release-assets/*.apk
+          fail_on_unmatched_files: true
+          overwrite_files: true

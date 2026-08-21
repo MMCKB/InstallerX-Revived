@@ -13,6 +13,8 @@ sealed interface ThemeSettingsAction {
     data class ChangeUseMiuix(val useMiuix: Boolean) : ThemeSettingsAction
     data class SetUseBlur(val enable: Boolean) : ThemeSettingsAction
     data class SetUseInstallerFrostedGlass(val enable: Boolean) : ThemeSettingsAction
+    data class SetInstallerFrostedGlassBlurRadius(val radius: Int) : ThemeSettingsAction
+    data class SetInstallerFrostedGlassOpacity(val opacity: Int) : ThemeSettingsAction
     data class SetThemeMode(val mode: ThemeMode) : ThemeSettingsAction
     data class SetPaletteStyle(val style: PaletteStyle) : ThemeSettingsAction
     data class SetColorSpec(val spec: ThemeColorSpec) : ThemeSettingsAction

@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.unit.dp
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
+import com.rosan.installer.ui.theme.withInstallerFrostedGlassOpacity
 import kotlinx.coroutines.delay
 
 @Composable
@@ -90,7 +91,7 @@ private fun InnerButton(
     val glassModifier = if (useFrostedGlass) {
         Modifier.border(
             width = 1.dp,
-            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
+            color = MaterialTheme.colorScheme.outlineVariant.withInstallerFrostedGlassOpacity(0.7f),
             shape = buttonShape
         )
     } else {
@@ -130,7 +131,7 @@ private fun InnerButton(
         shape = buttonShape,
         colors = ButtonDefaults.buttonColors(
             containerColor = if (useFrostedGlass) {
-                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.62f)
+                MaterialTheme.colorScheme.surfaceVariant.withInstallerFrostedGlassOpacity(0.86f)
             } else {
                 MaterialTheme.colorScheme.primaryContainer
             },

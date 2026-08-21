@@ -117,6 +117,10 @@
     <string name="theme_settings_use_blur_desc">Enable blur for the app</string>
     <string name="theme_settings_installer_frosted_glass">Frosted-glass installer</string>
     <string name="theme_settings_installer_frosted_glass_desc">Keeps the app on Material 3. Installation screens use real-time frosted glass when system blur is available.</string>
+    <string name="theme_settings_installer_frosted_glass_blur_radius">Installer blur radius</string>
+    <string name="theme_settings_installer_frosted_glass_blur_radius_desc">Controls the real-time background blur strength for installation screens.</string>
+    <string name="theme_settings_installer_frosted_glass_opacity">Installer glass opacity</string>
+    <string name="theme_settings_installer_frosted_glass_opacity_desc">Controls how translucent installation surfaces remain over the blurred background.</string>
     <string name="theme_settings_theme_mode">Theme Mode</string>
     <string name="theme_settings_theme_mode_desc">Select theme mode</string>
     <string name="theme_settings_theme_mode_light">Light theme</string>

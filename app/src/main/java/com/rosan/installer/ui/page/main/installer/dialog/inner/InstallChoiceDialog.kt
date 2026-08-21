@@ -64,6 +64,7 @@ import com.rosan.installer.ui.page.main.widget.setting.NavigationItemWidget
 import com.rosan.installer.ui.page.main.widget.setting.SegmentedColumn
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
 import com.rosan.installer.ui.theme.bottomShape
+import com.rosan.installer.ui.theme.withInstallerFrostedGlassOpacity
 import com.rosan.installer.ui.theme.middleShape
 import com.rosan.installer.ui.theme.singleShape
 import com.rosan.installer.ui.theme.topShape
@@ -419,7 +420,7 @@ private fun MultiApkGroupCard(
             shape = shape,
             colors = CardDefaults.cardColors(
                 containerColor = if (useFrostedGlass) {
-                    MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.62f)
+                    MaterialTheme.colorScheme.surfaceContainer.withInstallerFrostedGlassOpacity(0.86f)
                 } else {
                     MaterialTheme.colorScheme.surfaceContainer
                 }
@@ -501,7 +502,7 @@ private fun SingleItemCard(
         },
         shape = shape,
         colors = CardDefaults.cardColors(
-            containerColor = if (useFrostedGlass) containerColor.copy(alpha = 0.62f) else containerColor,
+            containerColor = if (useFrostedGlass) containerColor.withInstallerFrostedGlassOpacity(0.86f) else containerColor,
             contentColor = contentColor
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
@@ -544,7 +545,7 @@ private fun SelectableSubCard(
         },
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (useFrostedGlass) containerColor.copy(alpha = 0.62f) else containerColor,
+            containerColor = if (useFrostedGlass) containerColor.withInstallerFrostedGlassOpacity(0.86f) else containerColor,
             contentColor = contentColor
         )
     ) {

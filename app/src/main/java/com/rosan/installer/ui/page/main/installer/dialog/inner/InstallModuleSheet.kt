@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import com.rosan.installer.R
 import com.rosan.installer.domain.settings.model.preferences.RootMode
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
+import com.rosan.installer.ui.theme.withInstallerFrostedGlassOpacity
 import com.rosan.installer.ui.util.KeyEventBlocker
 
 /**
@@ -62,7 +63,7 @@ fun ModuleInstallSheetContent(
     val terminalBorder = if (useFrostedGlass) {
         Modifier.border(
             width = 1.dp,
-            color = colorScheme.outlineVariant.copy(alpha = 0.5f),
+            color = colorScheme.outlineVariant.withInstallerFrostedGlassOpacity(0.7f),
             shape = terminalShape
         )
     } else {
@@ -70,9 +71,9 @@ fun ModuleInstallSheetContent(
     }
     val actionButtonColors = if (useFrostedGlass) {
         ButtonDefaults.buttonColors(
-            containerColor = colorScheme.surfaceVariant.copy(alpha = 0.62f),
+            containerColor = colorScheme.surfaceVariant.withInstallerFrostedGlassOpacity(0.86f),
             contentColor = colorScheme.onSurface,
-            disabledContainerColor = colorScheme.surfaceVariant.copy(alpha = 0.4f),
+            disabledContainerColor = colorScheme.surfaceVariant.withInstallerFrostedGlassOpacity(0.56f),
             disabledContentColor = colorScheme.onSurface.copy(alpha = 0.38f)
         )
     } else {
@@ -117,7 +118,7 @@ fun ModuleInstallSheetContent(
                 .then(terminalBorder),
             colors = CardDefaults.cardColors(
                 containerColor = if (useFrostedGlass) {
-                    colorScheme.surfaceContainerHigh.copy(alpha = 0.62f)
+                    colorScheme.surfaceContainerHigh.withInstallerFrostedGlassOpacity(0.86f)
                 } else {
                     colorScheme.surfaceContainerHigh
                 }

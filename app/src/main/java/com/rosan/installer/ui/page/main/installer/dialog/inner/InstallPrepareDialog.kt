@@ -49,6 +49,7 @@ import com.rosan.installer.ui.page.main.installer.mapper.InstallNoticeResources
 import com.rosan.installer.ui.page.main.installer.mapper.InstallStateUiMapper
 import com.rosan.installer.ui.page.main.widget.chip.Chip
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
+import com.rosan.installer.ui.theme.withInstallerFrostedGlassOpacity
 import com.rosan.installer.ui.page.main.widget.chip.InstallInfoChipGroup
 import org.koin.compose.koinInject
 
@@ -351,7 +352,7 @@ fun installPrepareDialog(
                                 .padding(vertical = 4.dp),
                             shape = RoundedCornerShape(12.dp),
                             color = if (useFrostedGlass) {
-                                MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.62f)
+                                MaterialTheme.colorScheme.surfaceContainerHighest.withInstallerFrostedGlassOpacity(0.86f)
                             } else {
                                 MaterialTheme.colorScheme.surfaceContainerHighest
                             },

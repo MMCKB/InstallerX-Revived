@@ -39,6 +39,7 @@ import com.rosan.installer.ui.page.main.installer.dialog.DialogParams
 import com.rosan.installer.ui.page.main.installer.dialog.DialogParamsType
 import com.rosan.installer.ui.page.main.installer.dialog.dialogButtons
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
+import com.rosan.installer.ui.theme.withInstallerFrostedGlassOpacity
 
 @Composable
 fun installCompletedDialog(
@@ -106,7 +107,7 @@ private fun ResultItemCard(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = if (useFrostedGlass) {
-                MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.62f)
+                MaterialTheme.colorScheme.surfaceContainer.withInstallerFrostedGlassOpacity(0.86f)
             } else {
                 MaterialTheme.colorScheme.surfaceContainer
             }
@@ -138,7 +139,7 @@ private fun SuccessCard() {
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = if (useFrostedGlass) {
-                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.62f)
+                MaterialTheme.colorScheme.primaryContainer.withInstallerFrostedGlassOpacity(0.86f)
             } else {
                 MaterialTheme.colorScheme.primaryContainer
             }

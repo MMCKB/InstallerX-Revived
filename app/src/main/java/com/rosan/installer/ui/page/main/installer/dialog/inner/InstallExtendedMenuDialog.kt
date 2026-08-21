@@ -68,6 +68,7 @@ import com.rosan.installer.ui.page.main.installer.dialog.ExtendedMenuEntity
 import com.rosan.installer.ui.page.main.installer.dialog.ExtendedMenuItemEntity
 import com.rosan.installer.ui.page.main.installer.dialog.dialogButtons
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
+import com.rosan.installer.ui.theme.withInstallerFrostedGlassOpacity
 import com.rosan.installer.util.pm.getBestPermissionLabel
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -309,7 +310,7 @@ fun MenuItemWidget(
                             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
                             colors = CardDefaults.cardColors(
                                 containerColor = if (useFrostedGlass) {
-                                    MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.62f)
+                                    MaterialTheme.colorScheme.surfaceContainer.withInstallerFrostedGlassOpacity(0.86f)
                                 } else {
                                     MaterialTheme.colorScheme.surfaceContainer
                                 }
@@ -393,7 +394,7 @@ fun MenuItemWidget(
                             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
                             colors = CardDefaults.cardColors(
                                 containerColor = if (useFrostedGlass) {
-                                    MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.62f)
+                                    MaterialTheme.colorScheme.surfaceContainer.withInstallerFrostedGlassOpacity(0.86f)
                                 } else {
                                     MaterialTheme.colorScheme.surfaceContainer
                                 }
@@ -496,7 +497,7 @@ fun MenuItemWidget(
                         },
                         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = if (useFrostedGlass) containerColor.copy(alpha = 0.62f) else containerColor,
+                            containerColor = if (useFrostedGlass) containerColor.withInstallerFrostedGlassOpacity(0.86f) else containerColor,
                             contentColor = contentColor
                         )
                     ) {
@@ -639,7 +640,7 @@ fun PermissionCard(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(0.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (useFrostedGlass) containerColor.copy(alpha = 0.62f) else containerColor,
+            containerColor = if (useFrostedGlass) containerColor.withInstallerFrostedGlassOpacity(0.86f) else containerColor,
             contentColor = contentColor
         )
     ) {

@@ -111,6 +111,10 @@
     <string name="theme_settings_use_blur_desc">为应用启用模糊效果</string>
     <string name="theme_settings_installer_frosted_glass">毛玻璃安装界面</string>
     <string name="theme_settings_installer_frosted_glass_desc">应用内仍采用 Material 3；系统模糊可用时，安装界面将以实时毛玻璃材质渲染。</string>
+    <string name="theme_settings_installer_frosted_glass_blur_radius">安装界面模糊半径</string>
+    <string name="theme_settings_installer_frosted_glass_blur_radius_desc">调节安装界面背景的实时模糊强度。</string>
+    <string name="theme_settings_installer_frosted_glass_opacity">安装界面玻璃透明度</string>
+    <string name="theme_settings_installer_frosted_glass_opacity_desc">调节安装界面材质覆盖在模糊背景上的不透明程度。</string>
     <string name="theme_settings_theme_mode">主题模式</string>
     <string name="theme_settings_theme_mode_desc">选择主题模式</string>
     <string name="theme_settings_theme_mode_light">浅色主题</string>

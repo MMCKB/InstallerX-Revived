@@ -50,6 +50,7 @@ import com.rosan.installer.ui.page.main.settings.preferred.theme.ThemeSettingsAc
 import com.rosan.installer.ui.page.main.settings.preferred.theme.ThemeSettingsViewModel
 import com.rosan.installer.ui.page.main.widget.card.ColorSwatchPreview
 import com.rosan.installer.ui.page.miuix.widgets.MiuixBackButton
+import com.rosan.installer.ui.page.miuix.widgets.MiuixIntNumberPickerWidget
 import com.rosan.installer.ui.page.miuix.widgets.MiuixSwitchWidget
 import com.rosan.installer.ui.theme.getMiuixAppBarColor
 import com.rosan.installer.ui.theme.installerMiuixBlurEffect
@@ -163,6 +164,34 @@ fun MiuixThemeSettingsPage(
                                 viewModel.dispatch(ThemeSettingsAction.SetUseInstallerFrostedGlass(it))
                             }
                         )
+                        if (uiState.useInstallerFrostedGlass) {
+                            MiuixIntNumberPickerWidget(
+                                title = stringResource(R.string.theme_settings_installer_frosted_glass_blur_radius),
+                                description = stringResource(R.string.theme_settings_installer_frosted_glass_blur_radius_desc),
+                                value = uiState.installerFrostedGlassBlurRadius,
+                                startInt = 10,
+                                endInt = 100,
+                                valueSuffix = " px",
+                                onValueChange = {
+                                    viewModel.dispatch(
+                                        ThemeSettingsAction.SetInstallerFrostedGlassBlurRadius(it)
+                                    )
+                                }
+                            )
+                            MiuixIntNumberPickerWidget(
+                                title = stringResource(R.string.theme_settings_installer_frosted_glass_opacity),
+                                description = stringResource(R.string.theme_settings_installer_frosted_glass_opacity_desc),
+                                value = uiState.installerFrostedGlassOpacity,
+                                startInt = 35,
+                                endInt = 90,
+                                valueSuffix = "%",
+                                onValueChange = {
+                                    viewModel.dispatch(
+                                        ThemeSettingsAction.SetInstallerFrostedGlassOpacity(it)
+                                    )
+                                }
+                            )
+                        }
                     }
                     MiuixSwitchWidget(
                         title = stringResource(R.string.theme_settings_miuix_custom_colors),
