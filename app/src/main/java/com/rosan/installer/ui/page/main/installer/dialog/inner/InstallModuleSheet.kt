@@ -2,6 +2,7 @@
 // Copyright (C) 2025-2026 InstallerX Revived contributors
 package com.rosan.installer.ui.page.main.installer.dialog.inner
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -34,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rosan.installer.R
 import com.rosan.installer.domain.settings.model.preferences.RootMode
+import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
 import com.rosan.installer.ui.util.KeyEventBlocker
 
 /**
@@ -54,6 +57,27 @@ fun ModuleInstallSheetContent(
         it.key == Key.VolumeDown || it.key == Key.VolumeUp
     }
     val lazyListState = rememberLazyListState()
+    val useFrostedGlass = LocalInstallerFrostedGlass.current
+    val terminalShape = RoundedCornerShape(12.dp)
+    val terminalBorder = if (useFrostedGlass) {
+        Modifier.border(
+            width = 1.dp,
+            color = colorScheme.outlineVariant.copy(alpha = 0.5f),
+            shape = terminalShape
+        )
+    } else {
+        Modifier
+    }
+    val actionButtonColors = if (useFrostedGlass) {
+        ButtonDefaults.buttonColors(
+            containerColor = colorScheme.surfaceVariant.copy(alpha = 0.62f),
+            contentColor = colorScheme.onSurface,
+            disabledContainerColor = colorScheme.surfaceVariant.copy(alpha = 0.4f),
+            disabledContentColor = colorScheme.onSurface.copy(alpha = 0.38f)
+        )
+    } else {
+        ButtonDefaults.buttonColors()
+    }
 
     // Auto-scroll to the bottom when new lines are added, provided it's not finished yet
     LaunchedEffect(outputLines.size, isFinished) {
@@ -89,11 +113,16 @@ fun ModuleInstallSheetContent(
                 // Use weight to fill available remaining space without pushing bottom elements out of screen.
                 // fill = false allows it to be smaller than the available space if log content is short.
                 .weight(1f, fill = false)
-                .heightIn(min = 300.dp), // Removed max = 500.dp so weight can fully dictate upper limits
+                .heightIn(min = 300.dp) // Removed max = 500.dp so weight can fully dictate upper limits
+                .then(terminalBorder),
             colors = CardDefaults.cardColors(
-                containerColor = colorScheme.surfaceContainerHigh
+                containerColor = if (useFrostedGlass) {
+                    colorScheme.surfaceContainerHigh.copy(alpha = 0.62f)
+                } else {
+                    colorScheme.surfaceContainerHigh
+                }
             ),
-            shape = RoundedCornerShape(12.dp)
+            shape = terminalShape
         ) {
             LazyColumn(
                 state = lazyListState,
@@ -119,7 +148,8 @@ fun ModuleInstallSheetContent(
             Column {
                 Button(
                     onClick = onReboot,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = actionButtonColors
                 ) {
                     Text(stringResource(R.string.reboot))
                 }
@@ -132,7 +162,8 @@ fun ModuleInstallSheetContent(
                     }*/
                 Button(
                     onClick = onClose,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = actionButtonColors
                 ) {
                     Text(stringResource(R.string.close))
                 }
@@ -141,7 +172,8 @@ fun ModuleInstallSheetContent(
             Button(
                 enabled = false, // Disabled while installing
                 onClick = {},
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = actionButtonColors
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     CircularProgressIndicator(

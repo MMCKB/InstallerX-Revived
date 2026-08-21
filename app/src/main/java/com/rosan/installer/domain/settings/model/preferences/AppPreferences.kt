@@ -85,6 +85,7 @@ data class AppPreferences(
     val useDynColorFollowPkgIcon: Boolean,
     val useDynColorFollowPkgIconForLiveActivity: Boolean,
     val useBlur: Boolean,
+    val useInstallerFrostedGlass: Boolean,
     // Predictive Back Settings
     val predictiveBackAnimation: PredictiveBackAnimation,
     val predictiveBackExitDirection: PredictiveBackExitDirection

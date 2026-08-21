@@ -2,6 +2,7 @@ package com.rosan.installer.ui.page.main.installer.components
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
+import androidx.compose.foundation.border
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
 import com.rosan.installer.ui.util.WindowBlurEffect
 
 @Composable
@@ -67,6 +69,22 @@ fun PositionDialog(
     centerButton: @Composable (() -> Unit)? = null,
     rightButton: @Composable (() -> Unit)? = null
 ) {
+    val useFrostedGlass = LocalInstallerFrostedGlass.current
+    val effectiveContainerColor = if (useFrostedGlass) {
+        containerColor.copy(alpha = 0.72f)
+    } else {
+        containerColor
+    }
+    val effectiveModifier = if (useFrostedGlass) {
+        modifier.border(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.55f),
+            shape = shape
+        )
+    } else {
+        modifier
+    }
+
     Dialog(onDismissRequest = onDismissRequest, properties = properties) {
         WindowBlurEffect(useBlur = useBlur)
         Box(
@@ -84,9 +102,9 @@ fun PositionDialog(
                         detectTapGestures(onTap = {})
                     }) {
                 Surface(
-                    modifier = modifier,
+                    modifier = effectiveModifier,
                     shape = shape,
-                    color = containerColor,
+                    color = effectiveContainerColor,
                     tonalElevation = tonalElevation
                 ) {
                     Box(

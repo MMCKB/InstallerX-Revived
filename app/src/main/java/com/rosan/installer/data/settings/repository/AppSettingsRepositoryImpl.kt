@@ -158,6 +158,7 @@ class AppSettingsRepositoryImpl(
             useDynColorFollowPkgIconForLiveActivity = prefs[AppDataStore.LIVE_ACTIVITY_DYN_COLOR_FOLLOW_PKG_ICON] ?: false,
             useBlur = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) prefs[AppDataStore.UI_USE_BLUR]
                 ?: true else false,
+            useInstallerFrostedGlass = prefs[AppDataStore.UI_USE_INSTALLER_FROSTED_GLASS] ?: false,
             predictiveBackAnimation = PredictiveBackAnimation.fromValueOrDefault(
                 prefs[AppDataStore.PREDICTIVE_BACK_ANIMATION] ?: PredictiveBackAnimation.MIUIX.value
             ),
@@ -255,6 +256,7 @@ class AppSettingsRepositoryImpl(
             BooleanSetting.NetworkSourceModeWarningAcknowledged ->
                 AppDataStore.NETWORK_SOURCE_MODE_WARNING_ACKNOWLEDGED
             BooleanSetting.UiUseBlur -> AppDataStore.UI_USE_BLUR
+            BooleanSetting.UiUseInstallerFrostedGlass -> AppDataStore.UI_USE_INSTALLER_FROSTED_GLASS
             BooleanSetting.ThemeUseDynamicColor -> AppDataStore.THEME_USE_DYNAMIC_COLOR
             BooleanSetting.UiUseMiuix -> AppDataStore.UI_USE_MIUIX
             BooleanSetting.UiUseMiuixMonet -> AppDataStore.UI_USE_MIUIX_MONET

@@ -37,6 +37,7 @@ enum class BooleanSetting {
     AllowInternetAccess,
     NetworkSourceModeWarningAcknowledged,
     UiUseBlur,
+    UiUseInstallerFrostedGlass,
     ThemeUseDynamicColor,
     UiUseMiuix,
     UiUseMiuixMonet,

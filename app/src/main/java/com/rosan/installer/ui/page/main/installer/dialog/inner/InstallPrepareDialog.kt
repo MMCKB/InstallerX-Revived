@@ -48,6 +48,7 @@ import com.rosan.installer.ui.page.main.installer.dialog.dialogButtons
 import com.rosan.installer.ui.page.main.installer.mapper.InstallNoticeResources
 import com.rosan.installer.ui.page.main.installer.mapper.InstallStateUiMapper
 import com.rosan.installer.ui.page.main.widget.chip.Chip
+import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
 import com.rosan.installer.ui.page.main.widget.chip.InstallInfoChipGroup
 import org.koin.compose.koinInject
 
@@ -343,12 +344,17 @@ fun installPrepareDialog(
                         enter = fadeIn() + expandVertically(),
                         exit = fadeOut() + shrinkVertically()
                     ) {
+                        val useFrostedGlass = LocalInstallerFrostedGlass.current
                         Surface(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 4.dp),
                             shape = RoundedCornerShape(12.dp),
-                            color = MaterialTheme.colorScheme.surfaceContainerHighest,
+                            color = if (useFrostedGlass) {
+                                MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.62f)
+                            } else {
+                                MaterialTheme.colorScheme.surfaceContainerHighest
+                            },
                             contentColor = MaterialTheme.colorScheme.onSurfaceVariant
                         ) {
                             Text(

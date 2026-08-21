@@ -23,6 +23,7 @@ import com.rosan.installer.ui.page.main.widget.util.InstallerEventCollector
 import com.rosan.installer.ui.theme.InstallerMaterialExpressiveTheme
 import com.rosan.installer.ui.theme.InstallerTheme
 import com.rosan.installer.ui.theme.LocalInstallerColorScheme
+import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
 import com.rosan.installer.ui.theme.material.dynamicColorScheme
 import com.rosan.installer.ui.util.WindowBlurEffect
 import org.koin.compose.viewmodel.koinViewModel
@@ -40,6 +41,7 @@ fun DialogPage(
     val viewSettings = uiState.viewSettings
     val temporarySeedColor = uiState.seedColor
     val useBlur = viewSettings.useBlur
+    val useFrostedGlass = viewSettings.useFrostedGlass
 
     val globalColorScheme = InstallerTheme.colorScheme
     val isDark = InstallerTheme.isDark
@@ -64,7 +66,8 @@ fun DialogPage(
     InstallerEventCollector(viewModel)
 
     CompositionLocalProvider(
-        LocalInstallerColorScheme provides activeColorScheme
+        LocalInstallerColorScheme provides activeColorScheme,
+        LocalInstallerFrostedGlass provides useFrostedGlass
     ) {
         InstallerMaterialExpressiveTheme(
             colorScheme = activeColorScheme,
@@ -100,7 +103,11 @@ fun DialogPage(
                         }
                     },
                     sheetState = sheetState,
-                    containerColor = colorScheme.surfaceContainer,
+                    containerColor = if (useFrostedGlass) {
+                        colorScheme.surfaceContainer.copy(alpha = 0.72f)
+                    } else {
+                        colorScheme.surfaceContainer
+                    },
                     contentColor = colorScheme.onSurface
                 ) {
                     WindowNavigationEventBridge()

@@ -2,6 +2,7 @@
 // Copyright (C) 2023-2026 iamr0s, InstallerX Revived contributors
 package com.rosan.installer.ui.page.main.installer.dialog
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +31,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.unit.dp
+import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
 import kotlinx.coroutines.delay
 
 @Composable
@@ -83,6 +85,18 @@ fun dialogButtons(
 private fun InnerButton(
     button: DialogButton, modifier: Modifier = Modifier
 ) {
+    val useFrostedGlass = LocalInstallerFrostedGlass.current
+    val buttonShape = RoundedCornerShape(4.dp)
+    val glassModifier = if (useFrostedGlass) {
+        Modifier.border(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f),
+            shape = buttonShape
+        )
+    } else {
+        Modifier
+    }
+
     // Track the press interaction state for the button
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
@@ -112,11 +126,19 @@ private fun InnerButton(
                 button.onClick()
             }
         },
-        modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(4.dp),
+        modifier = modifier.fillMaxWidth().then(glassModifier),
+        shape = buttonShape,
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            containerColor = if (useFrostedGlass) {
+                MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.62f)
+            } else {
+                MaterialTheme.colorScheme.primaryContainer
+            },
+            contentColor = if (useFrostedGlass) {
+                MaterialTheme.colorScheme.onSurface
+            } else {
+                MaterialTheme.colorScheme.onPrimaryContainer
+            }
         ),
         contentPadding = PaddingValues(16.dp),
         interactionSource = interactionSource // Bind the interaction source

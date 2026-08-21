@@ -67,6 +67,7 @@ import com.rosan.installer.ui.page.main.installer.dialog.DialogParamsType
 import com.rosan.installer.ui.page.main.installer.dialog.ExtendedMenuEntity
 import com.rosan.installer.ui.page.main.installer.dialog.ExtendedMenuItemEntity
 import com.rosan.installer.ui.page.main.installer.dialog.dialogButtons
+import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
 import com.rosan.installer.util.pm.getBestPermissionLabel
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -220,6 +221,7 @@ fun MenuItemWidget(
     defaultInstallerFromSettings: String?
 ) {
     val haptic = LocalHapticFeedback.current
+    val useFrostedGlass = LocalInstallerFrostedGlass.current
 
     // Define shapes for different positions
     val cornerRadius = 16.dp
@@ -305,7 +307,13 @@ fun MenuItemWidget(
                             onClick = { /* Dropdown handles click */ },
                             shape = shape,
                             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+                            colors = CardDefaults.cardColors(
+                                containerColor = if (useFrostedGlass) {
+                                    MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.62f)
+                                } else {
+                                    MaterialTheme.colorScheme.surfaceContainer
+                                }
+                            )
                         ) {
                             Row(
                                 modifier = Modifier
@@ -383,7 +391,13 @@ fun MenuItemWidget(
                             onClick = { /* No-op */ },
                             shape = shape,
                             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
+                            colors = CardDefaults.cardColors(
+                                containerColor = if (useFrostedGlass) {
+                                    MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.62f)
+                                } else {
+                                    MaterialTheme.colorScheme.surfaceContainer
+                                }
+                            )
                         ) {
                             Row(
                                 modifier = Modifier
@@ -482,7 +496,7 @@ fun MenuItemWidget(
                         },
                         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = containerColor,
+                            containerColor = if (useFrostedGlass) containerColor.copy(alpha = 0.62f) else containerColor,
                             contentColor = contentColor
                         )
                     ) {
@@ -616,6 +630,7 @@ fun PermissionCard(
 
     // Automatically get the matching content color
     val contentColor = MaterialTheme.colorScheme.contentColorFor(containerColor)
+    val useFrostedGlass = LocalInstallerFrostedGlass.current
 
     // Create a variant color based on the content color for secondary text
     val variantContentColor = contentColor.copy(alpha = 0.7f)
@@ -624,7 +639,7 @@ fun PermissionCard(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(0.dp),
         colors = CardDefaults.cardColors(
-            containerColor = containerColor,
+            containerColor = if (useFrostedGlass) containerColor.copy(alpha = 0.62f) else containerColor,
             contentColor = contentColor
         )
     ) {

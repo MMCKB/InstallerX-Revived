@@ -238,6 +238,18 @@ fun ThemeSettingsPage(
                                 onCheckedChange = { viewModel.dispatch(ThemeSettingsAction.SetUseBlur(it)) }
                             )
                         }
+                        item {
+                            SwitchWidget(
+                                icon = AppIcons.Blur,
+                                title = stringResource(R.string.theme_settings_installer_frosted_glass),
+                                description = stringResource(R.string.theme_settings_installer_frosted_glass_desc),
+                                enabled = uiState.useBlur,
+                                checked = uiState.useInstallerFrostedGlass,
+                                onCheckedChange = {
+                                    viewModel.dispatch(ThemeSettingsAction.SetUseInstallerFrostedGlass(it))
+                                }
+                            )
+                        }
                     }
                     item {
                         BaseWidget(

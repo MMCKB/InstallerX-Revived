@@ -62,6 +62,7 @@ import com.rosan.installer.ui.page.main.installer.dialog.dialogButtons
 import com.rosan.installer.ui.page.main.widget.card.InfoTipCard
 import com.rosan.installer.ui.page.main.widget.setting.NavigationItemWidget
 import com.rosan.installer.ui.page.main.widget.setting.SegmentedColumn
+import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
 import com.rosan.installer.ui.theme.bottomShape
 import com.rosan.installer.ui.theme.middleShape
 import com.rosan.installer.ui.theme.singleShape
@@ -387,6 +388,7 @@ private fun MultiApkGroupCard(
     val baseInfo = remember(itemsInGroup) { itemsInGroup.firstNotNullOfOrNull { it.app as? AppEntity.BaseEntity } }
     val moduleInfo = remember(itemsInGroup) { itemsInGroup.firstNotNullOfOrNull { it.app as? AppEntity.ModuleEntity } }
     val appLabel = baseInfo?.label ?: moduleInfo?.name ?: packageResult.packageName
+    val useFrostedGlass = LocalInstallerFrostedGlass.current
 
     if (isSingleItemInGroup) {
         // Fallback to the first item if no BaseEntity is found
@@ -415,6 +417,13 @@ private fun MultiApkGroupCard(
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = shape,
+            colors = CardDefaults.cardColors(
+                containerColor = if (useFrostedGlass) {
+                    MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.62f)
+                } else {
+                    MaterialTheme.colorScheme.surfaceContainer
+                }
+            ),
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
         ) {
             Row(
@@ -481,6 +490,7 @@ private fun SingleItemCard(
     // Resolve dynamic container color and content color
     val containerColor = if (item.selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainer
     val contentColor = MaterialTheme.colorScheme.contentColorFor(containerColor)
+    val useFrostedGlass = LocalInstallerFrostedGlass.current
 
     Card(
         // Padding is now handled by the parent LazyColumn's contentPadding.
@@ -491,7 +501,7 @@ private fun SingleItemCard(
         },
         shape = shape,
         colors = CardDefaults.cardColors(
-            containerColor = containerColor,
+            containerColor = if (useFrostedGlass) containerColor.copy(alpha = 0.62f) else containerColor,
             contentColor = contentColor
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
@@ -524,6 +534,7 @@ private fun SelectableSubCard(
     // Resolve dynamic container color and content color
     val containerColor = if (item.selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainer
     val contentColor = MaterialTheme.colorScheme.contentColorFor(containerColor)
+    val useFrostedGlass = LocalInstallerFrostedGlass.current
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -533,7 +544,7 @@ private fun SelectableSubCard(
         },
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         colors = CardDefaults.cardColors(
-            containerColor = containerColor,
+            containerColor = if (useFrostedGlass) containerColor.copy(alpha = 0.62f) else containerColor,
             contentColor = contentColor
         )
     ) {

@@ -109,6 +109,8 @@
     <string name="theme_settings_use_apple_floating_bar_desc">在屏幕底部使用悬浮样式的导航栏</string>
     <string name="theme_settings_use_blur">启用模糊</string>
     <string name="theme_settings_use_blur_desc">为应用启用模糊效果</string>
+    <string name="theme_settings_installer_frosted_glass">毛玻璃安装界面</string>
+    <string name="theme_settings_installer_frosted_glass_desc">应用内仍采用 Material 3；系统模糊可用时，安装界面将以实时毛玻璃材质渲染。</string>
     <string name="theme_settings_theme_mode">主题模式</string>
     <string name="theme_settings_theme_mode_desc">选择主题模式</string>
     <string name="theme_settings_theme_mode_light">浅色主题</string>

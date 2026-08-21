@@ -115,6 +115,8 @@
     <string name="theme_settings_use_apple_floating_bar_desc">Display a floating style navigation bar at the bottom of the screen</string>
     <string name="theme_settings_use_blur">Enable Blur</string>
     <string name="theme_settings_use_blur_desc">Enable blur for the app</string>
+    <string name="theme_settings_installer_frosted_glass">Frosted-glass installer</string>
+    <string name="theme_settings_installer_frosted_glass_desc">Keeps the app on Material 3. Installation screens use real-time frosted glass when system blur is available.</string>
     <string name="theme_settings_theme_mode">Theme Mode</string>
     <string name="theme_settings_theme_mode_desc">Select theme mode</string>
     <string name="theme_settings_theme_mode_light">Light theme</string>

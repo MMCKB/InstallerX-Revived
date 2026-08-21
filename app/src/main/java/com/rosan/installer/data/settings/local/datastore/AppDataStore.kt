@@ -49,6 +49,8 @@ class AppDataStore(
 
         // UI Related
         val UI_USE_BLUR = register(booleanPreferencesKey("ui_use_blur"), PreferenceValueType.BOOLEAN)
+        val UI_USE_INSTALLER_FROSTED_GLASS =
+            register(booleanPreferencesKey("ui_use_installer_frosted_glass"), PreferenceValueType.BOOLEAN)
         val THEME_MODE = register(stringPreferencesKey("theme_mode"), PreferenceValueType.STRING)
         val THEME_PALETTE_STYLE = register(stringPreferencesKey("theme_palette_style"), PreferenceValueType.STRING)
         val THEME_COLOR_SPEC = register(stringPreferencesKey("theme_color_spec"), PreferenceValueType.STRING)

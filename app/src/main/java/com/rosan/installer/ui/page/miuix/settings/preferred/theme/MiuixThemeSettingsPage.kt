@@ -154,6 +154,15 @@ fun MiuixThemeSettingsPage(
                             checked = uiState.useBlur,
                             onCheckedChange = { viewModel.dispatch(ThemeSettingsAction.SetUseBlur(it)) }
                         )
+                        MiuixSwitchWidget(
+                            title = stringResource(R.string.theme_settings_installer_frosted_glass),
+                            description = stringResource(R.string.theme_settings_installer_frosted_glass_desc),
+                            enabled = uiState.useBlur,
+                            checked = uiState.useInstallerFrostedGlass,
+                            onCheckedChange = {
+                                viewModel.dispatch(ThemeSettingsAction.SetUseInstallerFrostedGlass(it))
+                            }
+                        )
                     }
                     MiuixSwitchWidget(
                         title = stringResource(R.string.theme_settings_miuix_custom_colors),

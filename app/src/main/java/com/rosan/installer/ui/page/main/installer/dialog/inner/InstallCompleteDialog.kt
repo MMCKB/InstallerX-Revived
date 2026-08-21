@@ -38,6 +38,7 @@ import com.rosan.installer.ui.page.main.installer.dialog.DialogInnerParams
 import com.rosan.installer.ui.page.main.installer.dialog.DialogParams
 import com.rosan.installer.ui.page.main.installer.dialog.DialogParamsType
 import com.rosan.installer.ui.page.main.installer.dialog.dialogButtons
+import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
 
 @Composable
 fun installCompletedDialog(
@@ -99,9 +100,17 @@ private fun ResultItemCard(
 ) {
     val app = result.entity.app
     val appLabel = (app as? AppEntity.BaseEntity)?.label ?: app.packageName
+    val useFrostedGlass = LocalInstallerFrostedGlass.current
 
     Card(
         modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = if (useFrostedGlass) {
+                MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.62f)
+            } else {
+                MaterialTheme.colorScheme.surfaceContainer
+            }
+        ),
         elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -124,9 +133,16 @@ private fun ResultItemCard(
 
 @Composable
 private fun SuccessCard() {
+    val useFrostedGlass = LocalInstallerFrostedGlass.current
     Card(
         modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+        colors = CardDefaults.cardColors(
+            containerColor = if (useFrostedGlass) {
+                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.62f)
+            } else {
+                MaterialTheme.colorScheme.primaryContainer
+            }
+        )
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
