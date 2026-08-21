@@ -8,7 +8,9 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 
@@ -67,7 +69,7 @@ fun Modifier.installerLiquidGlassEffect(shape: Shape): Modifier {
 
         val outline = shape.createOutline(size, layoutDirection, this)
         if (dispersion > 0f) {
-            drawOutline(
+            drawInstallerLiquidOutline(
                 outline = outline,
                 brush = Brush.linearGradient(
                     colors = listOf(
@@ -78,15 +80,52 @@ fun Modifier.installerLiquidGlassEffect(shape: Shape): Modifier {
                     start = Offset.Zero,
                     end = Offset(size.width, size.height)
                 ),
-                style = Stroke(width = edgeWidth.toPx())
+                width = edgeWidth.toPx()
             )
         }
         if (highlight > 0f) {
-            drawOutline(
+            drawInstallerLiquidOutline(
                 outline = outline,
-                color = Color.White.copy(alpha = highlightAlpha),
-                style = Stroke(width = 1.dp.toPx())
+                brush = Brush.linearGradient(
+                    colors = listOf(
+                        Color.White.copy(alpha = highlightAlpha),
+                        Color.White.copy(alpha = highlightAlpha * 0.4f)
+                    ),
+                    start = Offset.Zero,
+                    end = Offset(size.width, size.height)
+                ),
+                width = 1.dp.toPx()
             )
         }
+    }
+}
+
+private fun DrawScope.drawInstallerLiquidOutline(
+    outline: Outline,
+    brush: Brush,
+    width: Float
+) {
+    val style = Stroke(width = width)
+    when (outline) {
+        is Outline.Rectangle -> drawRect(
+            brush = brush,
+            topLeft = outline.rect.topLeft,
+            size = outline.rect.size,
+            style = style
+        )
+
+        is Outline.Rounded -> drawRoundRect(
+            brush = brush,
+            topLeft = outline.roundRect.topLeft,
+            size = outline.roundRect.size,
+            cornerRadius = outline.roundRect.topLeftCornerRadius,
+            style = style
+        )
+
+        is Outline.Generic -> drawPath(
+            path = outline.path,
+            brush = brush,
+            style = style
+        )
     }
 }
