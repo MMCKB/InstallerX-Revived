@@ -163,6 +163,11 @@ class AppSettingsRepositoryImpl(
                 (prefs[AppDataStore.UI_INSTALLER_FROSTED_GLASS_BLUR_RADIUS] ?: 30).coerceIn(10, 100),
             installerFrostedGlassOpacity =
                 (prefs[AppDataStore.UI_INSTALLER_FROSTED_GLASS_OPACITY] ?: 72).coerceIn(35, 90),
+            useInstallerLiquidGlass = prefs[AppDataStore.UI_USE_INSTALLER_LIQUID_GLASS] ?: false,
+            installerLiquidGlassHighlight =
+                (prefs[AppDataStore.UI_INSTALLER_LIQUID_GLASS_HIGHLIGHT] ?: 42).coerceIn(0, 100),
+            installerLiquidGlassDispersion =
+                (prefs[AppDataStore.UI_INSTALLER_LIQUID_GLASS_DISPERSION] ?: 28).coerceIn(0, 100),
             predictiveBackAnimation = PredictiveBackAnimation.fromValueOrDefault(
                 prefs[AppDataStore.PREDICTIVE_BACK_ANIMATION] ?: PredictiveBackAnimation.MIUIX.value
             ),
@@ -250,6 +255,8 @@ class AppSettingsRepositoryImpl(
             IntSetting.ThemeSeedColor -> AppDataStore.THEME_SEED_COLOR
             IntSetting.UiInstallerFrostedGlassBlurRadius -> AppDataStore.UI_INSTALLER_FROSTED_GLASS_BLUR_RADIUS
             IntSetting.UiInstallerFrostedGlassOpacity -> AppDataStore.UI_INSTALLER_FROSTED_GLASS_OPACITY
+            IntSetting.UiInstallerLiquidGlassHighlight -> AppDataStore.UI_INSTALLER_LIQUID_GLASS_HIGHLIGHT
+            IntSetting.UiInstallerLiquidGlassDispersion -> AppDataStore.UI_INSTALLER_LIQUID_GLASS_DISPERSION
             IntSetting.ShowMiIslandBlockingInterval -> AppDataStore.SHOW_MI_ISLAND_BLOCKING_INTERVAL_MS
             IntSetting.NotificationSuccessAutoClearSeconds -> AppDataStore.NOTIFICATION_SUCCESS_AUTO_CLEAR_SECONDS
             IntSetting.CloseSessionCountdown -> AppDataStore.CLOSE_SESSION_COUNTDOWN
@@ -263,6 +270,7 @@ class AppSettingsRepositoryImpl(
                 AppDataStore.NETWORK_SOURCE_MODE_WARNING_ACKNOWLEDGED
             BooleanSetting.UiUseBlur -> AppDataStore.UI_USE_BLUR
             BooleanSetting.UiUseInstallerFrostedGlass -> AppDataStore.UI_USE_INSTALLER_FROSTED_GLASS
+            BooleanSetting.UiUseInstallerLiquidGlass -> AppDataStore.UI_USE_INSTALLER_LIQUID_GLASS
             BooleanSetting.ThemeUseDynamicColor -> AppDataStore.THEME_USE_DYNAMIC_COLOR
             BooleanSetting.UiUseMiuix -> AppDataStore.UI_USE_MIUIX
             BooleanSetting.UiUseMiuixMonet -> AppDataStore.UI_USE_MIUIX_MONET

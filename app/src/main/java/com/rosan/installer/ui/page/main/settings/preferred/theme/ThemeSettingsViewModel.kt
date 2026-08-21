@@ -60,6 +60,9 @@ class ThemeSettingsViewModel(
             useInstallerFrostedGlass = prefs.useInstallerFrostedGlass,
             installerFrostedGlassBlurRadius = prefs.installerFrostedGlassBlurRadius,
             installerFrostedGlassOpacity = prefs.installerFrostedGlassOpacity,
+            useInstallerLiquidGlass = prefs.useInstallerLiquidGlass,
+            installerLiquidGlassHighlight = prefs.installerLiquidGlassHighlight,
+            installerLiquidGlassDispersion = prefs.installerLiquidGlassDispersion,
             themeMode = prefs.themeMode,
             paletteStyle = prefs.paletteStyle,
             colorSpec = prefs.colorSpec,
@@ -93,6 +96,15 @@ class ThemeSettingsViewModel(
             }
             is ThemeSettingsAction.SetInstallerFrostedGlassOpacity -> viewModelScope.launch {
                 updateSetting(IntSetting.UiInstallerFrostedGlassOpacity, action.opacity)
+            }
+            is ThemeSettingsAction.SetUseInstallerLiquidGlass -> viewModelScope.launch {
+                updateSetting(BooleanSetting.UiUseInstallerLiquidGlass, action.enable)
+            }
+            is ThemeSettingsAction.SetInstallerLiquidGlassHighlight -> viewModelScope.launch {
+                updateSetting(IntSetting.UiInstallerLiquidGlassHighlight, action.intensity)
+            }
+            is ThemeSettingsAction.SetInstallerLiquidGlassDispersion -> viewModelScope.launch {
+                updateSetting(IntSetting.UiInstallerLiquidGlassDispersion, action.intensity)
             }
             is ThemeSettingsAction.SetThemeMode -> viewModelScope.launch { updateSetting(StringSetting.ThemeMode, action.mode.name) }
             is ThemeSettingsAction.SetPaletteStyle -> viewModelScope.launch { updateSetting(StringSetting.ThemePaletteStyle, action.style.name) }

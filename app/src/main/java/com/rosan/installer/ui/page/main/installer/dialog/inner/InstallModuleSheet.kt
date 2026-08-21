@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import com.rosan.installer.R
 import com.rosan.installer.domain.settings.model.preferences.RootMode
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
+import com.rosan.installer.ui.theme.installerLiquidGlassEffect
 import com.rosan.installer.ui.theme.withInstallerFrostedGlassOpacity
 import com.rosan.installer.ui.util.KeyEventBlocker
 
@@ -115,7 +116,8 @@ fun ModuleInstallSheetContent(
                 // fill = false allows it to be smaller than the available space if log content is short.
                 .weight(1f, fill = false)
                 .heightIn(min = 300.dp) // Removed max = 500.dp so weight can fully dictate upper limits
-                .then(terminalBorder),
+                .then(terminalBorder)
+                .installerLiquidGlassEffect(terminalShape),
             colors = CardDefaults.cardColors(
                 containerColor = if (useFrostedGlass) {
                     colorScheme.surfaceContainerHigh.withInstallerFrostedGlassOpacity(0.86f)
@@ -149,7 +151,9 @@ fun ModuleInstallSheetContent(
             Column {
                 Button(
                     onClick = onReboot,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .installerLiquidGlassEffect(RoundedCornerShape(20.dp)),
                     colors = actionButtonColors
                 ) {
                     Text(stringResource(R.string.reboot))
@@ -163,7 +167,9 @@ fun ModuleInstallSheetContent(
                     }*/
                 Button(
                     onClick = onClose,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .installerLiquidGlassEffect(RoundedCornerShape(20.dp)),
                     colors = actionButtonColors
                 ) {
                     Text(stringResource(R.string.close))
@@ -173,7 +179,9 @@ fun ModuleInstallSheetContent(
             Button(
                 enabled = false, // Disabled while installing
                 onClick = {},
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .installerLiquidGlassEffect(RoundedCornerShape(20.dp)),
                 colors = actionButtonColors
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {

@@ -3,6 +3,7 @@
 package com.rosan.installer.ui.page.main.installer.dialog
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetValue
@@ -12,6 +13,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rosan.installer.domain.session.repository.InstallerSessionRepository
 import com.rosan.installer.ui.page.main.installer.InstallerStage
@@ -26,6 +29,10 @@ import com.rosan.installer.ui.theme.LocalInstallerColorScheme
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlassBlurRadius
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlassOpacity
+import com.rosan.installer.ui.theme.LocalInstallerLiquidGlass
+import com.rosan.installer.ui.theme.LocalInstallerLiquidGlassDispersion
+import com.rosan.installer.ui.theme.LocalInstallerLiquidGlassHighlight
+import com.rosan.installer.ui.theme.installerLiquidGlassEffect
 import com.rosan.installer.ui.theme.withInstallerFrostedGlassOpacity
 import com.rosan.installer.ui.theme.material.dynamicColorScheme
 import com.rosan.installer.ui.util.WindowBlurEffect
@@ -47,6 +54,9 @@ fun DialogPage(
     val useFrostedGlass = viewSettings.useFrostedGlass
     val frostedGlassBlurRadius = viewSettings.frostedGlassBlurRadius
     val frostedGlassOpacity = viewSettings.frostedGlassOpacity
+    val useLiquidGlass = viewSettings.useLiquidGlass
+    val liquidGlassHighlight = viewSettings.liquidGlassHighlight
+    val liquidGlassDispersion = viewSettings.liquidGlassDispersion
 
     val globalColorScheme = InstallerTheme.colorScheme
     val isDark = InstallerTheme.isDark
@@ -74,7 +84,10 @@ fun DialogPage(
         LocalInstallerColorScheme provides activeColorScheme,
         LocalInstallerFrostedGlass provides useFrostedGlass,
         LocalInstallerFrostedGlassBlurRadius provides frostedGlassBlurRadius,
-        LocalInstallerFrostedGlassOpacity provides frostedGlassOpacity
+        LocalInstallerFrostedGlassOpacity provides frostedGlassOpacity,
+        LocalInstallerLiquidGlass provides useLiquidGlass,
+        LocalInstallerLiquidGlassHighlight provides liquidGlassHighlight,
+        LocalInstallerLiquidGlassDispersion provides liquidGlassDispersion
     ) {
         InstallerMaterialExpressiveTheme(
             colorScheme = activeColorScheme,
@@ -110,6 +123,10 @@ fun DialogPage(
                         }
                     },
                     sheetState = sheetState,
+                    modifier = Modifier.installerLiquidGlassEffect(
+                        RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)
+                    ),
+                    shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
                     containerColor = if (useFrostedGlass) {
                         colorScheme.surfaceContainer.withInstallerFrostedGlassOpacity()
                     } else {

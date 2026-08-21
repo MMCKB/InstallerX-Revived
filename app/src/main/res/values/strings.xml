@@ -121,6 +121,12 @@
     <string name="theme_settings_installer_frosted_glass_blur_radius_desc">Controls the real-time background blur strength for installation screens.</string>
     <string name="theme_settings_installer_frosted_glass_opacity">Installer glass opacity</string>
     <string name="theme_settings_installer_frosted_glass_opacity_desc">Controls how translucent installation surfaces remain over the blurred background.</string>
+    <string name="theme_settings_installer_liquid_glass">Liquid-glass highlights</string>
+    <string name="theme_settings_installer_liquid_glass_desc">Adds lightweight specular highlights and prismatic edge tinting to frosted installer surfaces.</string>
+    <string name="theme_settings_installer_liquid_glass_highlight">Liquid-glass highlight</string>
+    <string name="theme_settings_installer_liquid_glass_highlight_desc">Controls the brightness of the glass highlight along surface edges.</string>
+    <string name="theme_settings_installer_liquid_glass_dispersion">Liquid-glass dispersion</string>
+    <string name="theme_settings_installer_liquid_glass_dispersion_desc">Controls the strength and width of the prismatic color fringe around glass edges.</string>
     <string name="theme_settings_theme_mode">Theme Mode</string>
     <string name="theme_settings_theme_mode_desc">Select theme mode</string>
     <string name="theme_settings_theme_mode_light">Light theme</string>

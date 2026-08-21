@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.unit.dp
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
+import com.rosan.installer.ui.theme.installerLiquidGlassEffect
 import com.rosan.installer.ui.theme.withInstallerFrostedGlassOpacity
 import kotlinx.coroutines.delay
 
@@ -127,7 +128,7 @@ private fun InnerButton(
                 button.onClick()
             }
         },
-        modifier = modifier.fillMaxWidth().then(glassModifier),
+        modifier = modifier.fillMaxWidth().then(glassModifier).installerLiquidGlassEffect(buttonShape),
         shape = buttonShape,
         colors = ButtonDefaults.buttonColors(
             containerColor = if (useFrostedGlass) {

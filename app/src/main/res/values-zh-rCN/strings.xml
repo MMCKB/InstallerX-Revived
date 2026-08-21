@@ -115,6 +115,12 @@
     <string name="theme_settings_installer_frosted_glass_blur_radius_desc">调节安装界面背景的实时模糊强度。</string>
     <string name="theme_settings_installer_frosted_glass_opacity">安装界面玻璃透明度</string>
     <string name="theme_settings_installer_frosted_glass_opacity_desc">调节安装界面材质覆盖在模糊背景上的不透明程度。</string>
+    <string name="theme_settings_installer_liquid_glass">液态玻璃高光</string>
+    <string name="theme_settings_installer_liquid_glass_desc">为毛玻璃安装表面添加低开销的镜面高光与棱镜色散边缘。</string>
+    <string name="theme_settings_installer_liquid_glass_highlight">液态玻璃高光强度</string>
+    <string name="theme_settings_installer_liquid_glass_highlight_desc">调节玻璃表面边缘镜面高光的亮度。</string>
+    <string name="theme_settings_installer_liquid_glass_dispersion">液态玻璃色散强度</string>
+    <string name="theme_settings_installer_liquid_glass_dispersion_desc">调节玻璃边缘棱镜彩色光晕的强度与宽度。</string>
     <string name="theme_settings_theme_mode">主题模式</string>
     <string name="theme_settings_theme_mode_desc">选择主题模式</string>
     <string name="theme_settings_theme_mode_light">浅色主题</string>

@@ -191,6 +191,43 @@ fun MiuixThemeSettingsPage(
                                     )
                                 }
                             )
+                            MiuixSwitchWidget(
+                                title = stringResource(R.string.theme_settings_installer_liquid_glass),
+                                description = stringResource(R.string.theme_settings_installer_liquid_glass_desc),
+                                enabled = uiState.useBlur,
+                                checked = uiState.useInstallerLiquidGlass,
+                                onCheckedChange = {
+                                    viewModel.dispatch(ThemeSettingsAction.SetUseInstallerLiquidGlass(it))
+                                }
+                            )
+                            if (uiState.useInstallerLiquidGlass) {
+                                MiuixIntNumberPickerWidget(
+                                    title = stringResource(R.string.theme_settings_installer_liquid_glass_highlight),
+                                    description = stringResource(R.string.theme_settings_installer_liquid_glass_highlight_desc),
+                                    value = uiState.installerLiquidGlassHighlight,
+                                    startInt = 0,
+                                    endInt = 100,
+                                    valueSuffix = "%",
+                                    onValueChange = {
+                                        viewModel.dispatch(
+                                            ThemeSettingsAction.SetInstallerLiquidGlassHighlight(it)
+                                        )
+                                    }
+                                )
+                                MiuixIntNumberPickerWidget(
+                                    title = stringResource(R.string.theme_settings_installer_liquid_glass_dispersion),
+                                    description = stringResource(R.string.theme_settings_installer_liquid_glass_dispersion_desc),
+                                    value = uiState.installerLiquidGlassDispersion,
+                                    startInt = 0,
+                                    endInt = 100,
+                                    valueSuffix = "%",
+                                    onValueChange = {
+                                        viewModel.dispatch(
+                                            ThemeSettingsAction.SetInstallerLiquidGlassDispersion(it)
+                                        )
+                                    }
+                                )
+                            }
                         }
                     }
                     MiuixSwitchWidget(

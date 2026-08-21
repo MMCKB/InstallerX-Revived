@@ -15,6 +15,9 @@ sealed interface ThemeSettingsAction {
     data class SetUseInstallerFrostedGlass(val enable: Boolean) : ThemeSettingsAction
     data class SetInstallerFrostedGlassBlurRadius(val radius: Int) : ThemeSettingsAction
     data class SetInstallerFrostedGlassOpacity(val opacity: Int) : ThemeSettingsAction
+    data class SetUseInstallerLiquidGlass(val enable: Boolean) : ThemeSettingsAction
+    data class SetInstallerLiquidGlassHighlight(val intensity: Int) : ThemeSettingsAction
+    data class SetInstallerLiquidGlassDispersion(val intensity: Int) : ThemeSettingsAction
     data class SetThemeMode(val mode: ThemeMode) : ThemeSettingsAction
     data class SetPaletteStyle(val style: PaletteStyle) : ThemeSettingsAction
     data class SetColorSpec(val spec: ThemeColorSpec) : ThemeSettingsAction

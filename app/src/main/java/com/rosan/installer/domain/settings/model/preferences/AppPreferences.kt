@@ -88,6 +88,9 @@ data class AppPreferences(
     val useInstallerFrostedGlass: Boolean,
     val installerFrostedGlassBlurRadius: Int,
     val installerFrostedGlassOpacity: Int,
+    val useInstallerLiquidGlass: Boolean,
+    val installerLiquidGlassHighlight: Int,
+    val installerLiquidGlassDispersion: Int,
     // Predictive Back Settings
     val predictiveBackAnimation: PredictiveBackAnimation,
     val predictiveBackExitDirection: PredictiveBackExitDirection

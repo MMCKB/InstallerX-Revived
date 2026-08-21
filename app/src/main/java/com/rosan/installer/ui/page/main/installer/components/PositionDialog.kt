@@ -37,6 +37,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlass
 import com.rosan.installer.ui.theme.LocalInstallerFrostedGlassBlurRadius
+import com.rosan.installer.ui.theme.installerLiquidGlassEffect
 import com.rosan.installer.ui.theme.withInstallerFrostedGlassOpacity
 import com.rosan.installer.ui.util.WindowBlurEffect
 
@@ -108,7 +109,7 @@ fun PositionDialog(
                         detectTapGestures(onTap = {})
                     }) {
                 Surface(
-                    modifier = effectiveModifier,
+                    modifier = effectiveModifier.installerLiquidGlassEffect(shape),
                     shape = shape,
                     color = effectiveContainerColor,
                     tonalElevation = tonalElevation
